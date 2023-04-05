@@ -1,0 +1,21 @@
+{
+  "name": "@photino/core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "files":["lib/**/*"],
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.8.7",
+    "tsconfig": "workspace:^",
+    "typescript": "^5.0.3"
+  }
+}

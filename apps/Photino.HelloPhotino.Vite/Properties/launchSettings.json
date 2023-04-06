@@ -1,0 +1,13 @@
+{
+	"profiles": {
+		"HelloPhotino.StaticFileServer": {
+			"commandName": "Project",
+			"nativeDebugging": true,
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"SPA_DEVSERVER": "https://localhost:3000"
+			}
+		}
+	}
+}
+

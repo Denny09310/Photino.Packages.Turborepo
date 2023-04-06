@@ -30,5 +30,6 @@ window.external = {
 export type ReceiveMessageCallback = (arg: string) => void;
 
 export const receiveMessage = (callback: ReceiveMessageCallback) => window.external.receiveMessage(callback);
-export const sendMessage = <T extends object>(message: T) =>
+
+export const sendMessage = <T>(message: T) =>
     window.external.sendMessage(typeof message === 'string' ? message : JSON.stringify(message));

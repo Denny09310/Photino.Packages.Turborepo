@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <Platforms>AnyCPU</Platforms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <RootNamespace>Photino.HelloPhotino.Vite</RootNamespace>
+
+    <!-- Application -->
+	<Version>1.0.0</Version>
+	<PublishSingleFile>true</PublishSingleFile>
+	<SelfContained>false</SelfContained>
+
+    <!-- Typescript -->
+	<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+	<TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+
+    <!-- SPA -->
+	<SpaRoot>Frontend\</SpaRoot>
+	<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+		<Content Remove="$(SpaRoot)**" />
+		<None Remove="$(SpaRoot)**" />
+		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.9" />
+    <!-- <PackageReference Include="Photino.NET" Version="2.3.0" />
+		<PackageReference Include="Photino.NET.Server" Version="1.0.0" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Photino.NET\Photino.NET\Photino.NET.csproj" />
+    <ProjectReference Include="..\..\..\Photino.NET.Server\Photino.NET.Server\Photino.NET.Server.csproj" />
+  </ItemGroup>
+
+  <!-- Ensure Node.js is installed -->
+	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		
+    <!-- You can use the preferred command -->
+    <Message Importance="high" Text="Restoring dependencies using 'pnpm'. This may take several minutes..." />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="pnpm install" />
+	</Target>
+
+	<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+		
+    <!-- You can use the preferred command -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="pnpm install" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="pnpm build" />
+
+		<!-- Include the newly-built files in the publish output -->
+		<ItemGroup>
+			<DistFiles Include="$(SpaRoot)dist\**" />
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
+
+</Project>

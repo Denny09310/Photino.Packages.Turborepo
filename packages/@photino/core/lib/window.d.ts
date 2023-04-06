@@ -16,4 +16,4 @@ declare global {
 }
 export type ReceiveMessageCallback = (arg: string) => void;
 export declare const receiveMessage: (callback: ReceiveMessageCallback) => () => void;
-export declare const sendMessage: <T extends object>(message: T) => void;
+export declare const sendMessage: <T>(message: T) => void;

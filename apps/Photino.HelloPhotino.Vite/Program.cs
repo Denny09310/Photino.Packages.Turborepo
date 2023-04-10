@@ -25,9 +25,10 @@ internal class Program
             .UseWebView(baseUrl)
             // Set the title of the application
             .SetTitle(WINDOW_TITLE)
+            .SetIconFile("Assets/photino.ico")
             // Set the size of the window
             .SetUseOsDefaultSize(false)
-            .SetSize(640, 470)
+            .SetSize(950, 650)
             // Center window in the middle of the screen
             .Center()
             // Register a custom scheme handler for app://
